@@ -153,7 +153,7 @@ contract CredentialNFT is ERC721, ERC721URIStorage, Ownable, Pausable {
 
     function addAuthorizedIssuer(address issuer) external onlyOwner {
         authorizedIssuers[issuer] = true;
-        emit IssuerAuthorization(issuer);
+        emit IssuerAuthorized(issuer);
     }
 
     function removeAuthorizedIssuer(address issuer) external onlyOwner {

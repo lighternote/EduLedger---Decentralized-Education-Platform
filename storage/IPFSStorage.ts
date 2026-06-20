@@ -1,5 +1,4 @@
 import { create } from 'ipfs-http-client';
-import { Readable } from 'stream';
 
 export interface CourseContent {
   title: string;
@@ -47,16 +46,17 @@ export interface Assignment {
 
 export class IPFSStorage {
   private client: any;
-  private nodeUrl: string;
 
   constructor(nodeUrl: string = 'https://ipfs.infura.io:5001') {
-    this.nodeUrl = nodeUrl;
+    const url = new URL(nodeUrl);
     this.client = create({
-      host: 'ipfs.infura.io',
-      port: 5001,
-      protocol: 'https',
+      host: url.hostname,
+      port: parseInt(url.port) || 5001,
+      protocol: url.protocol.replace(':', ''),
       headers: {
-        authorization: `Basic ${Buffer.from('2K3gZjJpXw4vN8tDqF1sYfQ7XcB5rHmWvE6kL9bC8nA3pP2sT1uR:0a1b2c3d4e5f6789abcdef0123456789abcdef0123456789abcdef0123456789').toString('base64')}`
+        authorization: `Basic ${Buffer.from(
+          `${process.env.INFURA_PROJECT_ID || ''}:${process.env.INFURA_PROJECT_SECRET || ''}`
+        ).toString('base64')}`
       }
     });
   }
@@ -269,13 +269,13 @@ export class IPFSStorage {
       }
 
       // Create and upload directory manifest
-      const manifest = {
+      const _manifest = {
         name: courseContent.title,
         type: 'directory',
         files: directory
       };
 
-      const manifestCid = await this.client.uploadDirectory(directory);
+      const _manifestCid = await this.client.uploadDirectory(directory);
       
       // Create metadata with all CIDs
       const { metadataCid } = await this.createCourseMetadata(

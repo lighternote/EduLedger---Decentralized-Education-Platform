@@ -50,7 +50,7 @@ app.get('/api/v1/info', (req, res) => {
 });
 
 // Error handling middleware
-app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+app.use((err: any, req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error(err.stack);
   res.status(500).json({
     error: 'Something went wrong!',
@@ -64,13 +64,6 @@ app.use((req, res) => {
     error: 'Not Found',
     message: 'The requested resource was not found'
   });
-});
-
-// Start server
-app.listen(PORT, () => {
-  console.log(`🚀 EduLedger API server running on port ${PORT}`);
-  console.log(`🌐 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`⭐ Network: ${process.env.STELLAR_NETWORK || 'testnet'}`);
 });
 
 // Export port for use in main file

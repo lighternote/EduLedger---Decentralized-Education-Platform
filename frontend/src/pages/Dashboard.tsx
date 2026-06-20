@@ -1,13 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { 
-  AcademicCapIcon, 
   BookOpenIcon, 
   CurrencyDollarIcon,
-  TrendingUpIcon,
+  ArrowTrendingUpIcon,
   UsersIcon,
-  AwardIcon 
-} from '@heroicons/react/outline';
+  StarIcon 
+} from '@heroicons/react/24/outline';
 
 export const Dashboard: React.FC = () => {
   const stats = [
@@ -30,14 +29,14 @@ export const Dashboard: React.FC = () => {
       value: '8',
       change: '+1 this month',
       changeType: 'increase',
-      icon: AwardIcon,
+      icon: StarIcon,
     },
     {
       name: 'Learning Streak',
       value: '15 days',
       change: 'Personal best!',
       changeType: 'increase',
-      icon: TrendingUpIcon,
+      icon: ArrowTrendingUpIcon,
     },
   ];
 
@@ -150,7 +149,7 @@ export const Dashboard: React.FC = () => {
               <span>Stake EDU Tokens</span>
             </button>
             <button className="w-full bg-purple-600 text-white py-3 px-4 rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center space-x-2">
-              <AwardIcon className="h-5 w-5" />
+              <StarIcon className="h-5 w-5" />
               <span>View Credentials</span>
             </button>
             <button className="w-full border-2 border-indigo-600 text-indigo-600 py-3 px-4 rounded-lg hover:bg-indigo-50 transition-colors flex items-center justify-center space-x-2">

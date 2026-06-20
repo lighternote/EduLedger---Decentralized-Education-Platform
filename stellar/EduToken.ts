@@ -99,7 +99,7 @@ export class EduToken {
         .addOperation(StellarSDK.Operation.setOptions({
           masterWeight: 0,
           lowThreshold: 1,
-          mediumThreshold: 1,
+          medThreshold: 1,
           highThreshold: 1,
           signer: {
             ed25519PublicKey: userKeypair.publicKey(),
@@ -115,7 +115,7 @@ export class EduToken {
         .build();
 
       transaction.sign(this.issuingKeypair, userKeypair, escrowKeypair);
-      const result = await server.submitTransaction(transaction);
+      const _result = await server.submitTransaction(transaction);
       
       console.log(`Staked ${amount} EDU for ${lockPeriod} seconds`);
       return escrowKeypair.publicKey();
@@ -186,7 +186,7 @@ export class EduToken {
   private async ensureAccountExists(keypair: StellarSDK.Keypair): Promise<void> {
     try {
       await server.loadAccount(keypair.publicKey());
-    } catch (error) {
+    } catch (_error) {
       // Account doesn't exist, create it
       await server.friendbot(keypair.publicKey());
     }
@@ -221,7 +221,7 @@ export class StakingPool {
       
       try {
         await server.loadAccount(this.poolKeypair.publicKey());
-      } catch (error) {
+      } catch (_error) {
         await server.friendbot(this.poolKeypair.publicKey());
       }
 

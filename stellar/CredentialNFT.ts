@@ -45,7 +45,7 @@ export class CredentialNFT {
       // Create trustline for the credential asset
       const recipientAccount = await this.server.loadAccount(recipientPublicKey);
       
-      const trustlineTransaction = new StellarSDK.TransactionBuilder(recipientAccount, {
+      const _trustlineTransaction = new StellarSDK.TransactionBuilder(recipientAccount, {
         networkPassphrase: this.networkPassphrase,
         fee: StellarSDK.BASE_FEE
       })
@@ -90,7 +90,7 @@ export class CredentialNFT {
         .build();
 
       issueTransaction.sign(this.issuerKeypair);
-      const result = await this.server.submitTransaction(issueTransaction);
+      const _result = await this.server.submitTransaction(issueTransaction);
       
       console.log(`Credential issued: ${assetCode}`);
       return assetCode;
@@ -104,15 +104,14 @@ export class CredentialNFT {
   async verifyCredential(assetCode: string): Promise<boolean> {
     try {
       const issuerAccount = await this.server.loadAccount(this.issuerKeypair.publicKey());
-      const dataEntry = issuerAccount.data_attr.find(data => 
-        data.name === `credential_${assetCode}`
-      );
+      const dataValue = issuerAccount.data_attr[`credential_${assetCode}`];
       
-      if (!dataEntry) {
+      if (!dataValue) {
         return false;
       }
       
-      const credentialData = JSON.parse(dataEntry.value.toString('utf8'));
+      const decodedValue = Buffer.from(dataValue, 'base64').toString('utf8');
+      const credentialData = JSON.parse(decodedValue);
       
       // Check if credential is expired
       if (credentialData.expiryDate > 0 && Math.floor(Date.now() / 1000) > credentialData.expiryDate) {
@@ -130,15 +129,14 @@ export class CredentialNFT {
   async getCredential(assetCode: string): Promise<any> {
     try {
       const issuerAccount = await this.server.loadAccount(this.issuerKeypair.publicKey());
-      const dataEntry = issuerAccount.data_attr.find(data => 
-        data.name === `credential_${assetCode}`
-      );
+      const dataValue = issuerAccount.data_attr[`credential_${assetCode}`];
       
-      if (!dataEntry) {
+      if (!dataValue) {
         throw new Error('Credential not found');
       }
       
-      return JSON.parse(dataEntry.value.toString('utf8'));
+      const decodedValue = Buffer.from(dataValue, 'base64').toString('utf8');
+      return JSON.parse(decodedValue);
     } catch (error) {
       console.error('Error getting credential:', error);
       throw error;
@@ -176,7 +174,7 @@ export class CredentialNFT {
       // Burn the credential by sending it back to issuer
       const userAccount = await this.server.loadAccount(userPublicKey);
       
-      const burnTransaction = new StellarSDK.TransactionBuilder(userAccount, {
+      const _burnTransaction = new StellarSDK.TransactionBuilder(userAccount, {
         networkPassphrase: this.networkPassphrase,
         fee: StellarSDK.BASE_FEE
       })
@@ -231,7 +229,7 @@ export class CredentialNFT {
   private async ensureAccountExists(publicKey: string): Promise<void> {
     try {
       await this.server.loadAccount(publicKey);
-    } catch (error) {
+    } catch (_error) {
       // For testnet, use friendbot to create account
       if (this.networkPassphrase === StellarSDK.Networks.TESTNET) {
         await this.server.friendbot(publicKey);
@@ -336,7 +334,7 @@ export class CredentialMarketplace {
       // Ensure marketplace account exists
       try {
         await this.server.loadAccount(this.marketplaceKeypair.publicKey());
-      } catch (error) {
+      } catch (_error) {
         if (this.networkPassphrase === StellarSDK.Networks.TESTNET) {
           await this.server.friendbot(this.marketplaceKeypair.publicKey());
         } else {
@@ -355,7 +353,7 @@ export class CredentialMarketplace {
   async createVerificationOffer(
     credentialAsset: StellarSDK.Asset,
     price: string,
-    verifierPublicKey: string
+    _verifierPublicKey: string
   ): Promise<string> {
     try {
       const marketplaceAccount = await this.server.loadAccount(this.marketplaceKeypair.publicKey());
@@ -365,7 +363,7 @@ export class CredentialMarketplace {
         fee: StellarSDK.BASE_FEE
       })
         .addOperation(StellarSDK.Operation.manageSellOffer({
-          selling: new StellarSDK.Asset.native(), // XLM
+          selling: StellarSDK.Asset.native(), // XLM
           buying: credentialAsset,
           amount: price,
           price: '1' // 1:1 ratio for verification

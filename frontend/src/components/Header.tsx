@@ -5,9 +5,9 @@ import {
   BookOpenIcon, 
   CurrencyDollarIcon, 
   UserIcon,
-  MenuIcon,
-  XIcon 
-} from '@heroicons/react/outline';
+  Bars3Icon,
+  XMarkIcon 
+} from '@heroicons/react/24/outline';
 
 export const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -62,9 +62,9 @@ export const Header: React.FC = () => {
               className="p-2 rounded-md text-gray-700 hover:text-indigo-600 hover:bg-gray-50"
             >
               {isMenuOpen ? (
-                <XIcon className="h-6 w-6" />
+                <XMarkIcon className="h-6 w-6" />
               ) : (
-                <MenuIcon className="h-6 w-6" />
+                <Bars3Icon className="h-6 w-6" />
               )}
             </button>
           </div>
