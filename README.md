@@ -1,7 +1,7 @@
-![CI](https://github.com/Ardecrown0001/Edu_Chain/workflows/CI/badge.svg)
-![License: MIT](https://img.shields.io/github/license/Ardecrown0001/Edu_Chain)
-![GitHub stars](https://img.shields.io/github/stars/Ardecrown0001/Edu_Chain?style=social)
-![GitHub forks](https://img.shields.io/github/forks/Ardecrown0001/Edu_Chain?style=social)
+![CI](https://github.com/lighternote/EduLedger---Decentralized-Education-Platform/workflows/CI/badge.svg)
+![License: MIT](https://img.shields.io/github/license/lighternote/EduLedger---Decentralized-Education-Platform)
+![GitHub stars](https://img.shields.io/github/stars/lighternote/EduLedger---Decentralized-Education-Platform?style=social)
+![GitHub forks](https://img.shields.io/github/forks/lighternote/EduLedger---Decentralized-Education-Platform?style=social)
 
 # EduLedger - Decentralized Education Platform
 
