@@ -47,5 +47,9 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "overrides": {
+    "undici": ">=6.26.1",
+    "parse-duration": ">=2.1.3"
   }
 }

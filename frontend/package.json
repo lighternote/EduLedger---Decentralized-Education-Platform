@@ -18,8 +18,8 @@
     "@types/react": "^18.2.31",
     "@types/react-dom": "^18.2.14",
     "@types/testing-library__jest-dom": "^5.14.9",
-    "@typescript-eslint/eslint-plugin": "^6.9.0",
-    "@typescript-eslint/parser": "^6.9.0",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
     "@vitejs/plugin-react": "^4.1.1",
     "eslint": "^8.52.0",
     "eslint-plugin-react": "^7.33.2",
@@ -47,5 +47,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "overrides": {
+    "esbuild": ">=0.24.3"
   }
 }
